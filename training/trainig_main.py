@@ -1,12 +1,7 @@
-import os
 import random
 import numpy as np
 import pandas as pd
 import torch
-
-import sys
-sys.path.insert(1, r'C:\Users\yczohar\projects\IBM_tsfm')
-sys.path.insert(1, r'C:\Users\yczohar\projects\transformers\src')
 
 from transformers import (
     EarlyStoppingCallback,
@@ -16,16 +11,16 @@ from transformers import (
     TrainingArguments,
 )
 
-from tsfm_public.toolkit.util import select_by_index
-from tsfm_public.toolkit.dataset import ForecastDFDataset
-from tsfm_public.toolkit.time_series_preprocessor import TimeSeriesPreprocessor
+from tsfm.toolkit.util import select_by_index
+from tsfm.toolkit.dataset import ForecastDFDataset
+from tsfm.toolkit.time_series_preprocessor import TimeSeriesPreprocessor
 
-import requests
-from requests.adapters import HTTPAdapter
-from urllib3.util.retry import Retry
-import time
 
 if __name__ =='__main__':
+
+    AWS_ACCESS_KEY_ID = "ASIA3EWCI5JQKVQTVSFQ"
+    AWS_SECRET_ACCESS_KEY = "gKhCcIrBbF60X03hi6EqVguhKXHZGfNqqU6/drY1"
+    AWS_SESSION_TOKEN = "IQoJb3JpZ2luX2VjEFEaCXVzLWVhc3QtMSJHMEUCIAMmJQlmH6mDHDTZfLsRpEQFvH13A6JqFRmXrOBy/Ss6AiEArgCkXvDquKRtoB8N6Zev4sagIP5XKww6lbBcjALyd70qpAMI6v//////////ARAAGgw3NjU5ODUzNTIyODgiDLwICxF5rHttrAl5Myr4ApVhfu1/n/v8Tf/z9z8xfJe+3Ze+IQlVZABwoGgqcupceZp1s1szhP/ac4+3vAyGKx7y/1x0KDeGte8LAXjkDuVCK8HtdvHS9J8CugaMY9YwlmhSbijcoKgUIvz7v79hK5wJ8etUBZmtj/eiQPk/BIhwUfMeG3BsdOEsehLSZIzEMYd1kBZoAqYVF5Am/3YcQj9Z+zoKEaOk8cqy+PPy5maZPXqWg5wssCGmgTJLn+hbri7bSAcqGXfrur9zkGs9VspL7Q1xXxnqgcgCb0NbZejHTH57hTDmFkGJoPR3ebzNWUHW9nGMC3fx6vRw9BnAYFbPqsj9elhfwp+Ar70Z+ujngbotiAnZLoHUbRfdg5SVq7oOqHHGqEuiJ8o5mM/XFGUjsGhVtuTPb3cvUd09QrZEl8lLFcsxzmqTCqmCASyIGRWnyNQt5Vypu9KjM8O80PCiaucRzvAL2wCBe0JUMRowjLYadq0jV13XD/uBJ3THyEfzU7mD/IIwrue/swY6pgGRfl9dtWnY0CUzCu0Yi+AKOumxRFbkg/FDGNbs51vY8g63NoTqVRFIFKZWXHxX9yilDV6ewUY0Fgg06DRdSrMyrdoIedEhLvpIbnlMSk6k+KRKbzph7k1piC0DEtCof13PwaNJ8KKaEiE8Aw6nCr2sFPdctmgyv4Z7fXne2rb6etV1smb1wC7xpsNIYUGGuKyCSl4TVy6KJTqNDNkLVw5J3aahkLbl"
 
     # Set seed for reproducibility
     SEED = 42
@@ -43,31 +38,35 @@ if __name__ =='__main__':
 
     print(f"Loading target dataset")
     dataset_path = r"C:\Users\yczohar\Desktop\demand_data\full_demand_weather_data_noNAN.csv"
+    dateset_path = "s3://sagemaker-demand/full_demand_weather_data_noNAN.csv"
     id_columns = []
     forecast_columns = ["year","month","day","hour","minute","second","temperature","dew_point","wind_direction","wind_speed",
                         "wind_gust_speed","pressure","sky_coverage","day_of_week","new_years_eve","new_years_day","easter_day_1","easter_day_2",
                         "may_day","victory_day","ascention_day","mothers_day","whit_sunday","whit_monday","fathers_day","bastille_day","assumption_day",
                         "all_saints_day","armistice_day","christmas_eve","christmas_day","demand"]
-    train_start_index = None  # None indicates beginning of dataset
-    train_end_index = 12 * 30 * 24 * 4
-    timestamp_column = "date"
-
-    # we shift the start of the validation/test period back by context length so that
-    # the first validation/test timestamp is immediately following the training data
-    valid_start_index = 12 * 30 * 24 * 4 - context_length
-    valid_end_index = 12 * 30 * 24 * 4 + 4 * 30 * 24 * 4
-
-    test_start_index = 12 * 30 * 24 * 4 + 4 * 30 * 24 * 4 - context_length
-    test_end_index = 12 * 30 * 24 * 4 + 8 * 30 * 24 * 4
 
     # Download ECL data from https://github.com/zhouhaoyi/Informer2020
     # dataset_path = r"C:\Users\yczohar\Downloads\ECL.csv"
     id_columns = []
+    timestamp_column = "date"
 
     data = pd.read_csv(
         dataset_path,
-        parse_dates = [timestamp_column]
+        parse_dates=[timestamp_column]
     )
+    print("size of data: ", len(data))
+
+    train_start_index = None  # None indicates beginning of dataset
+    train_end_index = int(len(data)/5*3)
+
+    # we shift the start of the validation/test period back by context length so that
+    # the first validation/test timestamp is immediately following the training data
+    valid_start_index = train_end_index - context_length
+    valid_end_index = valid_start_index + int(len(data)/5)
+
+    test_start_index = valid_end_index - context_length
+    test_end_index = int(len(data)-1)
+
 
     train_data = select_by_index(
         data,
@@ -182,6 +181,7 @@ if __name__ =='__main__':
         callbacks=[early_stopping_callback],
     )
 
-    print("\n\nDoing forecasting training on Etth1/train")
+    print("\n\nDoing forecasting training")
     trainer.train()
-    trainer.evaluate(test_dataset)
+    res = trainer.evaluate(test_dataset)
+    print(res)

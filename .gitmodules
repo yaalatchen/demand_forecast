@@ -1,0 +1,6 @@
+[submodule "tsfm"]
+	path = tsfm
+	url = https://github.com/yaalatchen/tsfm_skinny.git
+[submodule "transformers"]
+	path = transformers
+	url = https://github.com/yaalatchen/transformers_skinny.git
