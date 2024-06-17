@@ -150,7 +150,7 @@ if __name__ =='__main__':
         output_dir="./checkpoint/patchtsmixer/direct/train/output/",
         overwrite_output_dir=True,
         learning_rate=0.0001,
-        num_train_epochs=1,
+        num_train_epochs=10,
         do_eval=True,
         evaluation_strategy="epoch",
         per_device_train_batch_size=batch_size,
