@@ -3,13 +3,13 @@ import numpy as np
 import pandas as pd
 import torch
 
-from transformers import (
-    EarlyStoppingCallback,
-    PatchTSMixerConfig,
-    PatchTSMixerForPrediction,
-    Trainer,
-    TrainingArguments,
-)
+# from transformers import (
+#     EarlyStoppingCallback,
+#     PatchTSMixerConfig,
+#     PatchTSMixerForPrediction,
+#     Trainer,
+#     TrainingArguments,
+# )
 
 from tsfm.toolkit.util import select_by_index
 from tsfm.toolkit.dataset import ForecastDFDataset
