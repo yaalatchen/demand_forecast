@@ -3,13 +3,13 @@ import numpy as np
 import pandas as pd
 import torch
 
-# from transformers import (
-#     EarlyStoppingCallback,
-#     PatchTSMixerConfig,
-#     PatchTSMixerForPrediction,
-#     Trainer,
-#     TrainingArguments,
-# )
+from transformers import (
+    EarlyStoppingCallback,
+    PatchTSMixerConfig,
+    PatchTSMixerForPrediction,
+    Trainer,
+    TrainingArguments,
+)
 
 from tsfm.toolkit.util import select_by_index
 from tsfm.toolkit.dataset import ForecastDFDataset
@@ -17,10 +17,6 @@ from tsfm.toolkit.time_series_preprocessor import TimeSeriesPreprocessor
 
 
 if __name__ =='__main__':
-
-    AWS_ACCESS_KEY_ID = "ASIA3EWCI5JQKVQTVSFQ"
-    AWS_SECRET_ACCESS_KEY = "gKhCcIrBbF60X03hi6EqVguhKXHZGfNqqU6/drY1"
-    AWS_SESSION_TOKEN = "IQoJb3JpZ2luX2VjEFEaCXVzLWVhc3QtMSJHMEUCIAMmJQlmH6mDHDTZfLsRpEQFvH13A6JqFRmXrOBy/Ss6AiEArgCkXvDquKRtoB8N6Zev4sagIP5XKww6lbBcjALyd70qpAMI6v//////////ARAAGgw3NjU5ODUzNTIyODgiDLwICxF5rHttrAl5Myr4ApVhfu1/n/v8Tf/z9z8xfJe+3Ze+IQlVZABwoGgqcupceZp1s1szhP/ac4+3vAyGKx7y/1x0KDeGte8LAXjkDuVCK8HtdvHS9J8CugaMY9YwlmhSbijcoKgUIvz7v79hK5wJ8etUBZmtj/eiQPk/BIhwUfMeG3BsdOEsehLSZIzEMYd1kBZoAqYVF5Am/3YcQj9Z+zoKEaOk8cqy+PPy5maZPXqWg5wssCGmgTJLn+hbri7bSAcqGXfrur9zkGs9VspL7Q1xXxnqgcgCb0NbZejHTH57hTDmFkGJoPR3ebzNWUHW9nGMC3fx6vRw9BnAYFbPqsj9elhfwp+Ar70Z+ujngbotiAnZLoHUbRfdg5SVq7oOqHHGqEuiJ8o5mM/XFGUjsGhVtuTPb3cvUd09QrZEl8lLFcsxzmqTCqmCASyIGRWnyNQt5Vypu9KjM8O80PCiaucRzvAL2wCBe0JUMRowjLYadq0jV13XD/uBJ3THyEfzU7mD/IIwrue/swY6pgGRfl9dtWnY0CUzCu0Yi+AKOumxRFbkg/FDGNbs51vY8g63NoTqVRFIFKZWXHxX9yilDV6ewUY0Fgg06DRdSrMyrdoIedEhLvpIbnlMSk6k+KRKbzph7k1piC0DEtCof13PwaNJ8KKaEiE8Aw6nCr2sFPdctmgyv4Z7fXne2rb6etV1smb1wC7xpsNIYUGGuKyCSl4TVy6KJTqNDNkLVw5J3aahkLbl"
 
     # Set seed for reproducibility
     SEED = 42
