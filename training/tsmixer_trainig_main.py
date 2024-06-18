@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import torch
 
-from ..transformers import (
+from transformers import (
     EarlyStoppingCallback,
     PatchTSMixerConfig,
     PatchTSMixerForPrediction,
@@ -11,9 +11,9 @@ from ..transformers import (
     TrainingArguments,
 )
 
-from ..tsfm.toolkit.util import select_by_index
-from ..tsfm.toolkit.dataset import ForecastDFDataset
-from ..tsfm.toolkit.time_series_preprocessor import TimeSeriesPreprocessor
+from tsfm.toolkit.util import select_by_index
+from tsfm.toolkit.dataset import ForecastDFDataset
+from tsfm.toolkit.time_series_preprocessor import TimeSeriesPreprocessor
 
 
 if __name__ =='__main__':
