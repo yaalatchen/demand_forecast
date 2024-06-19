@@ -2,20 +2,27 @@ import random
 import numpy as np
 import pandas as pd
 import torch
-
-from transformers.trainer_callback import EarlyStoppingCallback
-from transformers.models.patchtsmixer.configuration_patchtsmixer import PatchTSMixerConfig
-from transformers.models.patchtsmixer.modeling_patchtsmixer import PatchTSMixerForPrediction
-from transformers.training_args import TrainingArguments
-from transformers.trainer import Trainer
+import git
 
 
-from tsfm.toolkit.util import select_by_index
-from tsfm.toolkit.dataset import ForecastDFDataset
-from tsfm.toolkit.time_series_preprocessor import TimeSeriesPreprocessor
 
 
 if __name__ =='__main__':
+
+    g = git.Repo('.')
+    for submodule in g.submodules:
+        submodule.update(init=True)
+
+
+    from transformers.trainer_callback import EarlyStoppingCallback
+    from transformers.models.patchtsmixer.configuration_patchtsmixer import PatchTSMixerConfig
+    from transformers.models.patchtsmixer.modeling_patchtsmixer import PatchTSMixerForPrediction
+    from transformers.training_args import TrainingArguments
+    from transformers.trainer import Trainer
+
+    from tsfm.toolkit.util import select_by_index
+    from tsfm.toolkit.dataset import ForecastDFDataset
+    from tsfm.toolkit.time_series_preprocessor import TimeSeriesPreprocessor
 
     # Set seed for reproducibility
     SEED = 42
