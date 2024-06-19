@@ -11,7 +11,7 @@ import sys
 
 if __name__ =='__main__':
 
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "python-git"])
+    # subprocess.check_call([sys.executable, "-m", "pip", "install", "python-git"])
 
     import git
     g = git.Repo('.')
