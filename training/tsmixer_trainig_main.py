@@ -2,16 +2,10 @@ import random
 import numpy as np
 import pandas as pd
 import torch
-import subprocess
-import sys
-
-
 
 
 
 if __name__ =='__main__':
-
-    # subprocess.check_call([sys.executable, "-m", "pip", "install", "python-git"])
 
     import git
     g = git.Repo('.')
