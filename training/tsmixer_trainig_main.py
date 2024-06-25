@@ -8,11 +8,6 @@ import torch
 if __name__ =='__main__':
 
     import git
-
-    username = "yaalatchen"
-    password = "sVGd594Py7uA@Eu"
-    remote = f"https://{username}:{password}@github.com/yaalatchen/demand_forecast.git"
-    git.Repo.clone_from(remote, '.')
     repo = git.Repo('.')
     repo.config_writer().set_value("user", "email", "yczohar@example.com").release()
     for submodule in repo.submodules:
