@@ -9,7 +9,6 @@ if __name__ =='__main__':
 
     import git
     repo = git.Repo('.')
-    repo.config_writer().set_value("user", "email", "yczohar@example.com").release()
     for submodule in repo.submodules:
         submodule.update(init=True)
 
