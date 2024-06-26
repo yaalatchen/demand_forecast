@@ -23,6 +23,7 @@ if __name__ =='__main__':
     from tsfm.toolkit.dataset import ForecastDFDataset
     from tsfm.toolkit.time_series_preprocessor import TimeSeriesPreprocessor
 
+    print("started")
     # Set seed for reproducibility
     SEED = 42
     torch.manual_seed(SEED)
@@ -51,6 +52,7 @@ if __name__ =='__main__':
     id_columns = []
     timestamp_column = "date"
 
+    print("reading data")
     data = pd.read_csv(
         dataset_path,
         parse_dates=[timestamp_column]
