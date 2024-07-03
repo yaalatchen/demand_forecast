@@ -39,7 +39,7 @@ if __name__ =='__main__':
     batch_size = 64  # Adjust according to GPU memory
 
     print(f"Loading target dataset")
-    dataset_path = r"C:\Users\yczohar\Desktop\demand_data\full_demand_weather_data_noNAN.csv"
+    # dataset_path = r"C:\Users\yczohar\Desktop\demand_data\full_demand_weather_data_noNAN.csv"
     dateset_path = "s3://sagemaker-demand/full_demand_weather_data_noNAN.csv"
     id_columns = []
     forecast_columns = ["year","month","day","hour","minute","second","temperature","dew_point","wind_direction","wind_speed",
