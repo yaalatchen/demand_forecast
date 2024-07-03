@@ -40,7 +40,7 @@ if __name__ =='__main__':
 
     print(f"Loading target dataset")
     # dataset_path = r"C:\Users\yczohar\Desktop\demand_data\full_demand_weather_data_noNAN.csv"
-    dateset_path = "s3://sagemaker-demand/full_demand_weather_data_noNAN.csv"
+    dataset_path = "s3://sagemaker-demand/full_demand_weather_data_noNAN.csv"
     id_columns = []
     forecast_columns = ["year","month","day","hour","minute","second","temperature","dew_point","wind_direction","wind_speed",
                         "wind_gust_speed","pressure","sky_coverage","day_of_week","new_years_eve","new_years_day","easter_day_1","easter_day_2",
